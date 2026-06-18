@@ -225,8 +225,7 @@ a:hover {
                     <p>Vous n'avez pas de compte?</p>
                     <button type="button" onclick="window.location.href='register.php'">Créer un compte</button>
                 </div>
-                
-                <a href="index.php">← Retour à l'accueil</a>
+               
             </form>
         </div>
     </div>
