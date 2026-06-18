@@ -46,7 +46,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'employe') {
     <div class="topbar">
         <button id="hamburger" class="hamburger" aria-label="Menu">☰</button>
         <div class="user-menu">
-            <span class="user">👤 <?= $_SESSION['email']; ?></span>
+            <span class="user">👤 <?= $_SESSION['mail']; ?></span>
             <a href="profil.php" class="profile-icon" title="Mon Profil">👤</a>
         </div>
     </div>

@@ -2,6 +2,18 @@
 session_start();
 require_once "connexion.php";
 
+// Vérification de l'authentification et du rôle
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Bloquer l'accès si ce n'est pas un admin
+if ($_SESSION['role'] !== 'admin') {
+    header("Location: dashboard.php");
+    exit();
+}
+
 /* AJOUT EMPLOYÉ */
 if (isset($_POST['ajouter'])) {
 
@@ -11,6 +23,11 @@ if (isset($_POST['ajouter'])) {
     $mail = trim($_POST['mail']);
     $adresse = trim($_POST['adresse']);
     $poste = trim($_POST['poste']);
+    $role = trim($_POST['role']);
+
+    if (!in_array($role, ['employe', 'manager'])) {
+        die("❌ Rôle invalide");
+    }
 
     try {
 
@@ -28,12 +45,12 @@ if (isset($_POST['ajouter'])) {
         $motDePasseTemp = "emp" . rand(1000, 9999);
         $hash = password_hash($motDePasseTemp, PASSWORD_BCRYPT);
 
-        // 1. INSERT utilisateur (AVEC PASSWORD)
+        // 1. INSERT utilisateur (AVEC PASSWORD et le rôle choisi)
         $stmt = $pdo->prepare("
             INSERT INTO utilisateurs(nom, prenom, telephone, mail, adresse, password, role)
-            VALUES (?, ?, ?, ?, ?, ?, 'employe')
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$nom, $prenom, $telephone, $mail, $adresse, $hash]);
+        $stmt->execute([$nom, $prenom, $telephone, $mail, $adresse, $hash, $role]);
 
         $id_user = $pdo->lastInsertId();
 
@@ -84,7 +101,7 @@ $employes = $pdo->query(
     <h2>Espace <br><span>Administrateur</span></h2>
 
    <ul>
-        <li class="active"><a href="dashboardadmin.php">🏠 Dashboard</a></li>
+        <li class="active"><a href="dashboard.php">🏠 Dashboard</a></li>
         <li><a href="employe.php">👨‍💼 Employés</a></li>
         <li><a href="clients.php">👥 Clients</a></li>
         <li><a href="produits.php">📦 Produits</a></li>
@@ -121,6 +138,12 @@ $employes = $pdo->query(
             <input type="email" name="mail" placeholder="Email" required>
             <input type="text" name="adresse" placeholder="Adresse">
             <input type="text" name="poste" placeholder="Poste (ex: vendeur, admin)" required>
+            
+            <select name="role" required>
+                <option value="">-- Sélectionner un rôle --</option>
+                <option value="employe">👤 Employé</option>
+                <option value="manager">👨‍💼 Manager</option>
+            </select>
 
             <button type="submit" name="ajouter">Ajouter employé</button>
 

@@ -2,6 +2,12 @@
 session_start();
 require_once "connexion.php";
 
+// Vérification de l'authentification
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 /* AJOUT PRODUIT */
 if (isset($_POST['ajouter'])) {
 
@@ -131,7 +137,7 @@ td{
 
     <h2>Espace <br><span>Administrateur</span></h2>
   <ul>
-        <li class="active"><a href="dashboardadmin.php">🏠 Dashboard</a></li>
+        <li class="active"><a href="dashboard.php">🏠 Dashboard</a></li>
         <li><a href="employe.php">👨‍💼 Employés</a></li>
         <li><a href="clients.php">👥 Clients</a></li>
     </table>

@@ -2,6 +2,18 @@
 session_start();
 require_once "connexion.php";
 
+// Vérification de l'authentification
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Bloquer l'accès à l'employé
+if ($_SESSION['role'] === 'employe') {
+    header("Location: dashboard.php");
+    exit();
+}
+
 // AJOUT CLIENT
 if (isset($_POST['ajouter'])) {
     $nom = trim($_POST['nom'] ?? '');
@@ -55,7 +67,7 @@ $clients = $pdo->query("SELECT id_client, nom, prenom, telephone, mail, adresse 
     <h2>Espace <br><span>Administrateur</span></h2>
 
      <ul>
-        <li class="active"><a href="dashboardadmin.php">🏠 Dashboard</a></li>
+        <li class="active"><a href="dashboard.php">🏠 Dashboard</a></li>
         <li><a href="employe.php">👨‍💼 Employés</a></li>
         <li><a href="clients.php">👥 Clients</a></li>
         <li><a href="produits.php">📦 Produits</a></li>

@@ -2,6 +2,18 @@
 session_start();
 require_once "connexion.php";
 
+// Vérification de l'authentification
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Bloquer l'accès à l'employé
+if ($_SESSION['role'] === 'employe') {
+    header("Location: dashboard.php");
+    exit();
+}
+
 // Vérifier ID
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("ID client manquant");
@@ -95,7 +107,7 @@ button:hover {
     <h2>Espace <br><span>Administrateur</span></h2>
 
     <ul>
-        <li><a href="dashboardadmin.php">🏠 Dashboard</a></li>
+        <li><a href="dashboard.php">🏠 Dashboard</a></li>
         <li><a href="employes.php">👨‍💼 Employés</a></li>
         <li class="active"><a href="clients.php">👥 Clients</a></li>
         <li><a href="produits.php">📦 Produits</a></li>

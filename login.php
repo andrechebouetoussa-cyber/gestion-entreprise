@@ -34,22 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION["nom"] = $user['nom'];
     $_SESSION["mail"] = $user['mail'];
 
-    switch ($user['role']) {
-
-        case 'admin':
-            header("Location: dashboardadmin.php");
-            exit();
-
-        case 'employe':
-            header("Location: dashboardemploye.php");
-            exit();
-
-        case 'client':
-            header("Location: dashboardclient.php");
-            exit();
-
-        default:
-            die("❌ Rôle inconnu");
+    // Tous les rôles vont vers le même dashboard
+    if (in_array($user['role'], ['admin', 'employe', 'manager'])) {
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        die("❌ Rôle inconnu");
     }
 }
 ?>

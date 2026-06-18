@@ -7,6 +7,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Bloquer l'accès à l'employé
+if ($_SESSION['role'] === 'employe') {
+    header("Location: dashboard.php");
+    exit();
+}
+
 /* STATISTIQUES */
 $clients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 $produits = $pdo->query("SELECT COUNT(*) FROM produits")->fetchColumn();
@@ -41,7 +47,7 @@ $topProduit = $pdo->query("
     <h2>Espace <br><span>Administrateur</span></h2>
 
      <ul>
-        <li class="active"><a href="dashboardadmin.php">🏠 Dashboard</a></li>
+        <li class="active"><a href="dashboard.php">🏠 Dashboard</a></li>
         <li><a href="employe.php">👨‍💼 Employés</a></li>
         <li><a href="clients.php">👥 Clients</a></li>
         <li><a href="produits.php">📦 Produits</a></li>

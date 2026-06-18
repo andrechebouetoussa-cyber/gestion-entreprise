@@ -533,3 +533,29 @@ td{
         z-index:900;
     }
 }
+.box {
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+.stock-alert{
+    background:#fff3cd;
+    border-left:5px solid #ffc107;
+    padding:20px;
+    border-radius:12px;
+    margin:20px 0;
+}
+
+.stock-alert h2{
+    margin-top:0;
+    color:#856404;
+}
+
+.alert-item{
+    background:white;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.05);
+}

@@ -2,6 +2,12 @@
 session_start();
 require_once "connexion.php";
 
+// Vérification de l'authentification
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 /* Vérifier ID */
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("ID produit manquant");
