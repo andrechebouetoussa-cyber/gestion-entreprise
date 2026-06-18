@@ -157,7 +157,7 @@ button{
         <button id="hamburger" class="hamburger" aria-label="Menu">☰</button>
         <div class="user-menu">
             <a href="profil.php" class="profile-icon" title="Mon Profil">
-                👤 <?= $_SESSION['email']; ?>
+                👤 <?= $_SESSION['mail']; ?>
             </a>
         </div>
 

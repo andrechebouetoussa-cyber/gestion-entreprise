@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("❌ Veuillez remplir tous les champs.");
     }
 
-    $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE mail = ?");
+    $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE mail = ?");
     $stmt->execute([$mail]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
